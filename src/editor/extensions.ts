@@ -2,6 +2,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Node } from "@tiptap/core";
 import RootBlock from "./root-block";
 import ChildBlock from "./child-block";
+import UniqueID from "@tiptap-pro/extension-unique-id";
 
 const Document = Node.create({
 	name: "doc",
@@ -13,6 +14,9 @@ const Extensions = [
 	Document,
 	RootBlock,
 	ChildBlock,
+	UniqueID.configure({
+		types: ["childblock", "rootblock"]
+	}),
 	StarterKit.configure({
 		document: false
 	})
