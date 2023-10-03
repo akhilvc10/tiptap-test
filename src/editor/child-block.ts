@@ -1,5 +1,6 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
+import { Plugin, PluginKey, NodeSelection } from "prosemirror-state";
 
 import ChildBlockComponent from "./child-block-component";
 

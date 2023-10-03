@@ -1,5 +1,6 @@
 import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { DragHandleDots2Icon, PlusIcon } from "@radix-ui/react-icons";
+import { useDrop, DropTargetMonitor } from "react-dnd";
 
 const ChildBlockComponent: React.FC<NodeViewProps> = ({
 	node,
@@ -7,21 +8,27 @@ const ChildBlockComponent: React.FC<NodeViewProps> = ({
 	editor,
 	updateAttributes
 }) => {
+	// const [{ isOver }, drop] = useDrop({
+	// 	accept: "YOUR_DRAGGABLE_TYPE", // Specify the type of draggable items that can be dropped here
+	// 	drop: (item, monitor) => {
+	// 		// Access the drop target here
+	// 		const dropTarget = monitor.getDropResult();
+	// 		console.log("Dropped onto:", dropTarget);
+	// 	},
+	// 	collect: (monitor) => ({
+	// 		isOver: !!monitor.isOver()
+	// 	})
+	// });
+
 	function countChildblocks(childblock) {
-		console.log(
-			"🚀 ~ file: child-block-component.tsx ~ line 13 ~ countChildblocks ~ childblock",
-			childblock
-		);
 		// Initialize the childblock count.
 		// let childblockCount = 0;
-
 		// // Iterate over the childblock's content and count the number of childblocks.
 		// for (const block of childblock.content.content) {
 		// 	if (block.type.name === "childblock") {
 		// 		childblockCount++;
 		// 	}
 		// }
-
 		// // Return the childblock count.
 		// return childblockCount;
 	}
@@ -32,7 +39,6 @@ const ChildBlockComponent: React.FC<NodeViewProps> = ({
 
 		//If no block, init to 1
 		let blockId = 1;
-		console.log({ blockId });
 		const currentSectionNumber = node.attrs.sectionNumber;
 
 		/**
@@ -52,11 +58,6 @@ const ChildBlockComponent: React.FC<NodeViewProps> = ({
 			//This will be the block number
 			blockId = blocks;
 		}
-
-		console.log(
-			"🚀 ~ file: child-block-component.tsx ~ line 17 ~ createNodeAfter ~ sectionId",
-			currentSectionNumber
-		);
 
 		// Use the editor's command to insert a new "rootblock" node at the calculated position
 		editor
@@ -79,9 +80,13 @@ const ChildBlockComponent: React.FC<NodeViewProps> = ({
 
 	return (
 		<NodeViewWrapper
+			data-sectionnumber={node.attrs.sectionNumber}
+			data-blockid={node.attrs.id}
 			as="div"
 			className="group h-20 relative mx-auto flex w-auto gap-5 shadow-lg border-2 m-2 border-blue-600">
 			<div
+				data-sectionnumber={node.attrs.sectionNumber}
+				data-blockid={node.attrs.id}
 				className="absolute -left-12 top-5 flex w-12 gap-1 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
 				aria-label="left-menu">
 				{/* Button to add a new node after the current node */}
@@ -89,7 +94,12 @@ const ChildBlockComponent: React.FC<NodeViewProps> = ({
 					<PlusIcon className="h-5 w-5" />
 				</button>
 				{/* Draggable handle button to allow rearranging nodes */}
-				<button draggable data-drag-handle className="cursor-grab">
+				<button
+					draggable
+					data-drag-handle
+					data-sectionnumber={node.attrs.sectionNumber}
+					data-blockid={node.attrs.id}
+					className="cursor-grab">
 					<DragHandleDots2Icon className="h-5 w-5" />
 				</button>
 			</div>

@@ -15,14 +15,6 @@ const RootBlockComponent: React.FC<NodeViewProps> = ({
 
 		// @ts-ignore
 		const sectionId = editor.getJSON().content.length + 1;
-		console.log(
-			"🚀 ~ file: root-block-component.tsx ~ line 18 ~ createNodeAfter ~ editor",
-			editor
-		);
-		console.log(
-			"🚀 ~ file: root-block-component.tsx ~ line 18 ~ createNodeAfter ~ sectionId",
-			sectionId
-		);
 
 		// @ts-ignore
 		const blockId = editor.getJSON().content[0]?.content?.length - 1;
@@ -64,11 +56,18 @@ const RootBlockComponent: React.FC<NodeViewProps> = ({
 	// Render the custom node view
 	return (
 		<NodeViewWrapper
+			data-sectionnumber={node.attrs.sectionNumber}
+			data-blockid={node.attrs.id}
 			as="div"
 			className="group h-auto m-2 relative mx-auto flex w-full gap-2 shadow-lg  border-2 border-red-600">
-			<div className="relative mx-auto w-full max-w-4xl">
+			<div
+				data-sectionnumber={node.attrs.sectionNumber}
+				data-blockid={node.attrs.id}
+				className="relative mx-auto w-full max-w-4xl">
 				{/* Container for buttons that appear on hover */}
 				<div
+					data-sectionnumber={node.attrs.sectionNumber}
+					data-blockid={node.attrs.id}
 					className="absolute -left-12 top-5 flex w-12 gap-1 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
 					aria-label="left-menu">
 					{/* Button to add a new node after the current node */}
@@ -76,7 +75,12 @@ const RootBlockComponent: React.FC<NodeViewProps> = ({
 						<PlusIcon className="h-5 w-5" />
 					</button>
 					{/* Draggable handle button to allow rearranging nodes */}
-					<button draggable data-drag-handle className="cursor-grab">
+					<button
+						data-sectionnumber={node.attrs.sectionNumber}
+						data-blockid={node.attrs.id}
+						draggable
+						data-drag-handle
+						className="cursor-grab">
 						<DragHandleDots2Icon className="h-5 w-5" />
 					</button>
 				</div>
